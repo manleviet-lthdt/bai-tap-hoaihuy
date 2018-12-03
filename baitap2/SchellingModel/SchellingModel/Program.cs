@@ -13,15 +13,16 @@ namespace SchellingModel
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
 
             Grid g = new Grid();
-            int N=0;
+            int N = 0;
             do
             {
                 Console.WriteLine("The size of grid N<50");
                 Console.Write("Enter the size of grid NxN: ");
-                 N = int.Parse(Console.ReadLine());
+                N = int.Parse(Console.ReadLine());
             }
             while (N > 50);
-            g.N = N; 
+            g.N = N;
+
             //Tỷ lệ tác tử X / 0
             Console.WriteLine("Enter X/O: ");
             Console.Write("Enter X: ");
@@ -29,9 +30,9 @@ namespace SchellingModel
             Console.Write("Enter O: ");
             g.Qo = int.Parse(Console.ReadLine());
 
-            //Số ô trống
-            Console.Write("Enter number of Empty cell: ");
-             g.NumEmpty = int.Parse(Console.ReadLine());
+            //Số vị trí trống ( nhiều tác tử trong một ô)
+            Console.Write("Enter number of Empty: ");
+            g.NumEmpty = int.Parse(Console.ReadLine());
 
             ////Nhập chỉ số hạnh phúc
             //Console.Write("Enter index of satisfied: ");
@@ -47,22 +48,35 @@ namespace SchellingModel
                 g.kindG = int.Parse(Console.ReadLine());
             } while (g.kindG != 1 && g.kindG != 2);
 
+
+
             //Xuất ra màn hình
             int[,] grid = new int[g.N, g.N];
-            int dem = 0;
-            for (int i = 0; i < g.N; i++)
+            int i = 0;
+            int j = 0;
+            foreach(Cell p in g.MakeList())
             {
-
-                for (int j = 0; j < g.N; j++)
-                {
-                    grid[i, j] = g.MakeList()[dem].KindCell;
-                    dem++;
-                }
+                grid[i, j] = p.KindOfCell();
+                j++;
+                if(j==N)
+                { j = 0;i++; }
+                //Console.Write(i + "," + j);
+                //Console.WriteLine();
+                //Console.Write(p.KindOfCell() + " ");
             }
-            
+            //for (int i = 0; i < g.N; i++)
+            //{
+
+            //    for (int j = 0; j < g.N; j++)
+            //    {
+            //        grid[i, j] = g.MakeList()[dem].KindOfCell();
+            //        dem++;
+            //    }
+            //}
+
             GridUtility.DrawGrid(grid);
 
-            Console.ReadKey();
         }
+        
     }
 }

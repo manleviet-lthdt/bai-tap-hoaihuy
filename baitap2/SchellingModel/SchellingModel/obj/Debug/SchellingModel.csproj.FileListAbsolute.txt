@@ -5,3 +5,10 @@ C:\Users\DDD\Documents\GitHub\LTHDT\Bài tập\2017\SchellingModel\SchellingMode
 C:\Users\DDD\Documents\GitHub\LTHDT\Bài tập\2017\SchellingModel\SchellingModel\obj\Debug\SchellingModel.csproj.CoreCompileInputs.cache
 C:\Users\DDD\Documents\GitHub\LTHDT\Bài tập\2017\SchellingModel\SchellingModel\obj\Debug\SchellingModel.exe
 C:\Users\DDD\Documents\GitHub\LTHDT\Bài tập\2017\SchellingModel\SchellingModel\obj\Debug\SchellingModel.pdb
+C:\Users\MyPC\Documents\GitHub\bai-tap-hoaihuy\baitap2\SchellingModel\SchellingModel\bin\Debug\SchellingModel.exe.config
+C:\Users\MyPC\Documents\GitHub\bai-tap-hoaihuy\baitap2\SchellingModel\SchellingModel\bin\Debug\SchellingModel.exe
+C:\Users\MyPC\Documents\GitHub\bai-tap-hoaihuy\baitap2\SchellingModel\SchellingModel\bin\Debug\SchellingModel.pdb
+C:\Users\MyPC\Documents\GitHub\bai-tap-hoaihuy\baitap2\SchellingModel\SchellingModel\obj\Debug\SchellingModel.csprojAssemblyReference.cache
+C:\Users\MyPC\Documents\GitHub\bai-tap-hoaihuy\baitap2\SchellingModel\SchellingModel\obj\Debug\SchellingModel.csproj.CoreCompileInputs.cache
+C:\Users\MyPC\Documents\GitHub\bai-tap-hoaihuy\baitap2\SchellingModel\SchellingModel\obj\Debug\SchellingModel.exe
+C:\Users\MyPC\Documents\GitHub\bai-tap-hoaihuy\baitap2\SchellingModel\SchellingModel\obj\Debug\SchellingModel.pdb

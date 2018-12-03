@@ -8,9 +8,11 @@ namespace SchellingModel
 {
     class Grid
     {
-        public List<Cell> listc;
-
+        //public List<Cell> listc;
+        public Cell c;
+        // loại lưới
         public int kindG;
+
         // Số ô trống
         public int NumEmpty { get; set; }
         // Kích thước của ma trân NxN
@@ -21,117 +23,150 @@ namespace SchellingModel
 
         public Grid()
         {
-            listc = new List<Cell>();
+            //listc = new List<Cell>();
         }
 
         public Grid(int e, int N, int x, int o, int k)
         {
-            listc = new List<Cell>();
+            //listc = new List<Cell>();
             NumEmpty = e;
             this.N = N;
             Qx = x;
             Qo = o;
             kindG = k;
         }
-        // Số tác tử X và O được tính ra
-        //public int NumAgentX()
-        //{
-        //    return (N * N - NumEmpty) * Qx / (Qx + Qo);
-        //}
+        public int Total()
+        {
+            return  N* N *c.NumAgofCell();
+        }
+        //Số tác tử X và O được tính ra
+        public int NumAgentX()
+        {
 
-        //public int NumAgentO()
-        //{
-        //    return N - NumAgentX() - NumEmpty;
-        //}
+            return (Total() - NumEmpty) * Qx / (Qx + Qo);
+        }
 
+        public int NumAgentO()
+        {
 
+            return Total() - NumAgentX() - NumEmpty;
+        }
 
+        public List<int> Possitive()
+        {
+            return Enumerable.Range(0, Total()).ToList();
+        }
+
+        //list chính lưu các Agent chưa random
+        List<Agent> listag = new List<Agent>();
+        //list chính lưu các cell chứa random
+        List<Cell> listc = new List<Cell>();
+        //list trộn các cell lại
+        List<Cell> listRand = new List<Cell>();
+        //list trộn các agent lại
+        List<Agent> listRandAg = new List<Agent>();
+        // list dùng để lưu một dãy số để trộn lại
+        //List<int> possible;
+
+        // các biến tạm để đếm tác tử
+        int demAgX = 0;
+        int demAgO = 0;
+        int demAgNull = 0;
+
+        //Hàm random
+        Random rand = new Random();
         // Tạo một list các tác tử nằm ngẫu nhiên
         public List<Cell> MakeList()
         {
-            Cell c;
-            if (kindG==1)
-                c = new SingleCell();
-            else
-                c = new MultiCell();
-
-            List<Cell> listc = new List<Cell>();
-
-            //Biến đếm để đếm để kiểm tra số lượng tác tử và ô rỗng
-            int demAgO = 0;
-            int demAgX = 0;
-            int demEmpty = 0;
-
-            Random rand = new Random();
-
-            //Số lượng các tác tử
-            int NumAgentX = (N * N - NumEmpty) * Qx / (Qx + Qo);
-            int NumAgentO = (N * N - NumEmpty) * Qx / (Qx + Qo);
-
-            // Số lượng tác tử trong 1 ( ô đa tác tử )
-            int NumAgofCell = rand.Next(100);
-            if (c is MultiCell)
-            {
-                //Số lượng các tác tử được thay đổi
-                NumAgentX = (N * N* NumAgofCell - NumEmpty) * Qx / (Qx + Qo);
-                NumAgentO = (N * N* NumAgofCell - NumEmpty) * Qx / (Qx + Qo);
-            }
-
 
             for (int i = 0; i < N; i++)
             {
                 // Gán vị trí Y cho tác tử đồng thời chọn ngẫu nhiên loại tác tử 
                 for (int j = 0; j < N; j++)
                 {
-                    if (c is MultiCell)
-                    {
-                        for (int m = 0; i < NumAgofCell; m++)
-                        {
-                            Agent b = new Agent();
-                            c.AddAgent(b);
-                        }
-                        c.KindOfCell();
-                    }
+                    if (kindG == 1)
+                        c = new SingleCell();
+                    else
+                        c = new MultiCell();
 
-                    Agent a = new Agent();
-                    
                     c.X = i;
                     c.Y = j;
 
-                    // Tạo một dãy các tác tử theo thứ tự rỗng, X, O
-                    if (demEmpty != NumEmpty)
-                        c.KindCell = -1;
-                    else
-                    if (demAgX != NumAgentX)
-                        c.KindCell = 1;
-                    else c.KindCell = 0;
+                        for (int m = 0; m < c.NumAgofCell(); m++)
+                        {
+                            Agent a = new Agent();
+                            if (demAgNull != NumEmpty)
+                                a.KindAgent = -1;
+                            else
+                            if (demAgX != NumAgentX())
+                                a.KindAgent = 1;
+                            else a.KindAgent = 0;
+                            // Tạo một dãy các tác tử theo thứ tự rỗng, X, O
+                            if (a.KindAgent == -1)
+                                demAgNull++;
+                            if (a.KindAgent == 1)
+                                demAgX++;
+                            if (a.KindAgent == 0)
+                                demAgO++;
+                            if (c is SingleCell) c.AddAgent(a);
+                            else listag.Add(a);
+                        }
 
-                    if (c.KindCell == -1)
-                        demEmpty++;
-                    if (c.KindCell == 1)
-                        demAgX++;
-                    if (c.KindCell == 0)
-                        demAgO++;
-                    c.AddAgent(a);
                     listc.Add(c);
 
                 }
 
             }
-            // Xáo trộn vị trí các tác tử
-            // random numbers without repeating- base on stackoverflow
-            List<int> possible = Enumerable.Range(0, N * N).ToList();
-            List<int> listNumbers = new List<int>();
-            List<Cell> listRand = new List<Cell>();
 
-            for (int i = 0; i < N * N; i++)
+            if(c is MultiCell)
             {
-                int index = rand.Next(0, possible.Count);
-                listRand.Add(listc[possible[index]]);
-                possible.RemoveAt(index);
+                // Xáo trộn vị trí các tác tử
+                //random numbers without repeating-base on stackoverflow
+                for (int i = 0; i < Total(); i++)
+                {
+                    int rd = rand.Next(0, Possitive().Count);
+                    listRandAg.Add(listag[Possitive()[rd]]);
+                    Possitive().RemoveAt(rd);
+                }
+ 
+                int index = 0;
+                for (int i = 0; i < listRandAg.Count; i = i + c.NumAgofCell())
+                {
+                    int demX = 0;
+                    int demO = 0;
+                    for (int j = i; j < i + c.NumAgofCell(); j++)
+                    {
+                        if (listRandAg[j].KindAgent == 1)
+                            demX++;
+                        if (listRandAg[j].KindAgent == 0)
+                            demO++;
+
+                    }
+                    if (demO > demX)
+                        listc[index].KindCell = 0;
+                    else if (demO == demX)
+                        listc[index].KindCell = -1;
+                    else listc[index].KindCell = 1;
+                    index++;
+                }
+                return listc;
             }
+            else
+            {
+                // Xáo trộn vị trí các tác tử
+                //random numbers without repeating-base on stackoverflow
+                for (int i = 0; i < N * N; i++)
+                {
+                    int index = rand.Next(0, Possitive().Count);
+                    listRand.Add(listc[Possitive()[index]]);
+                    Possitive().RemoveAt(index);
+                }
+                return listRand;
+            }
+
+           
+
             
-            return listRand;
         }
 
     }

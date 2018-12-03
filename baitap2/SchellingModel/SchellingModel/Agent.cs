@@ -10,7 +10,6 @@ namespace SchellingModel
     {
         //Cấu tử
         public Agent() { }
-        
         // Chỉ số hạnh phúc (satisfied)
         public int T 
         {
@@ -26,21 +25,8 @@ namespace SchellingModel
                 return T;
             }
         }
-        //Loại tác tử 
-        public int KindAgent
-        {
-            set
-            {
-                if (value !=1 && value !=0)
-                    throw new ArgumentOutOfRangeException(
-                          $"{nameof(value)} must be 1 or 0.");
-                KindAgent = value;
-            }
-            get
-            {
-                return KindAgent;
-            }
-        }
+        //Loại tác tử
+        public int KindAgent { get; set; }
 
         //Số lượng ô trong ô ( Ô đơn thì NumofCell=1)
         public int NumofCell { get; set; }
@@ -57,7 +43,10 @@ namespace SchellingModel
             T = t;
         }
 
-
+        public int KindOfAgent()
+        {
+            return KindAgent;
+        }
 
     }
 }

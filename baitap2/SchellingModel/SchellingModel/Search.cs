@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SchellingModel
 {
-    class Sequential
+    abstract class Search
     {
+    
     }
 }

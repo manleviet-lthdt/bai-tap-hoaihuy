@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchellingModel
 {
-    class Inspect
+    class SOrdinal
     {
     }
 }
