@@ -52,10 +52,10 @@ namespace SchellingModel
             return Total() - NumAgentX() - NumEmpty;
         }
 
-        public List<int> Possitive()
-        {
-            return Enumerable.Range(0, Total()).ToList();
-        }
+        //public List<int> Possitive()
+        //{
+        //    return Enumerable.Range(0, Total()).ToList();
+        //}
 
         //list chính lưu các Agent chưa random
         List<Agent> listag = new List<Agent>();
@@ -66,7 +66,7 @@ namespace SchellingModel
         //list trộn các agent lại
         List<Agent> listRandAg = new List<Agent>();
         // list dùng để lưu một dãy số để trộn lại
-        //List<int> possible;
+        
 
         // các biến tạm để đếm tác tử
         int demAgX = 0;
@@ -108,6 +108,7 @@ namespace SchellingModel
                                 demAgX++;
                             if (a.KindAgent == 0)
                                 demAgO++;
+
                             if (c is SingleCell) c.AddAgent(a);
                             else listag.Add(a);
                         }
@@ -122,11 +123,12 @@ namespace SchellingModel
             {
                 // Xáo trộn vị trí các tác tử
                 //random numbers without repeating-base on stackoverflow
+                List<int> possible = Enumerable.Range(0, Total()).ToList();
                 for (int i = 0; i < Total(); i++)
                 {
-                    int rd = rand.Next(0, Possitive().Count);
-                    listRandAg.Add(listag[Possitive()[rd]]);
-                    Possitive().RemoveAt(rd);
+                    int rd = rand.Next(0, possible.Count);
+                    listRandAg.Add(listag[possible[rd]]);
+                    possible.RemoveAt(rd);
                 }
  
                 int index = 0;
@@ -155,11 +157,12 @@ namespace SchellingModel
             {
                 // Xáo trộn vị trí các tác tử
                 //random numbers without repeating-base on stackoverflow
+                List<int> possible = Enumerable.Range(0, Total()).ToList();
                 for (int i = 0; i < N * N; i++)
                 {
-                    int index = rand.Next(0, Possitive().Count);
-                    listRand.Add(listc[Possitive()[index]]);
-                    Possitive().RemoveAt(index);
+                    int index = rand.Next(0, possible.Count);
+                    listRand.Add(listc[possible[index]]);
+                    possible.RemoveAt(index);
                 }
                 return listRand;
             }
