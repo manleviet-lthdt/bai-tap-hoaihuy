@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace SchellingModel
 {
-    class SOrdinal
-    {
-    }
+    //class SOrdinal:Search
+    //{
+    //    //public override bool SearchAgent(Grid grid)
+    //    //{
+    //    //    int demX = 0;
+    //    //    int demO = 0;
+    //    //    foreach(Cell p in grid.MakeList())
+    //    //    {
+               
+    //    //    }
+    //    //}
+    //}
 }

@@ -8,6 +8,7 @@ namespace SchellingModel
 {
     abstract class Search
     {
-    
+        abstract public bool SearchAgent(Grid grid);
+
     }
 }

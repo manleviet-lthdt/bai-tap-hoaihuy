@@ -50,33 +50,33 @@ namespace SchellingModel
 
 
 
-            //Xuất ra màn hình
+            ////Xuất ra màn hình
             int[,] grid = new int[g.N, g.N];
             int i = 0;
             int j = 0;
-            foreach(Cell p in g.MakeList())
+            if(g.kindG==1)
             {
-                grid[i, j] = p.KindOfCell();
-                j++;
-                if(j==N)
-                { j = 0;i++; }
-                //Console.Write(i + "," + j);
-                //Console.WriteLine();
-                //Console.Write(p.KindOfCell() + " ");
+                foreach (Cell p in g.MakeListSingle())
+                {
+                    grid[i, j] = p.KindOfCell();
+                    j++;
+                    if (j == N)
+                    { j = 0; i++; }
+                }
             }
-            //for (int i = 0; i < g.N; i++)
-            //{
-
-            //    for (int j = 0; j < g.N; j++)
-            //    {
-            //        grid[i, j] = g.MakeList()[dem].KindOfCell();
-            //        dem++;
-            //    }
-            //}
-
+            if(g.kindG==2)
+            {
+                foreach (Cell p in g.MakeListMulti())
+                {
+                    grid[i, j] = p.KindOfCell();
+                    j++;
+                    if (j == N)
+                    { j = 0; i++; }
+                }
+            }
             GridUtility.DrawGrid(grid);
-
+            
         }
-        
+
     }
 }

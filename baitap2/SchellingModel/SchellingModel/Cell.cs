@@ -6,19 +6,39 @@ using System.Threading.Tasks;
 
 namespace SchellingModel
 {
-    abstract class Cell
+    /*abstract*/ class Cell
     {
-        List<Agent> agent;
+        List<Agent> listag;
+        ////Loại Ô ( Ô đó được thể hiện thuộc loại tác tử nào)
+        //public virtual int KindCell { get; set; }
+
+        ////vi tri của ô
+        //public int X { get; set; }
+        //public int Y { get; set; }
+
+        //public Cell() {  }
+
+        //public Cell(int xPos, int yPos, int k)
+        //{
+        //    X = xPos;
+        //    Y = yPos;
+        //    KindCell = k;
+        //}
+
+        //public abstract int NumAgofCell();
+        //public abstract int KindOfCell();
+        //public abstract void AddAgent(Agent a);
+        //public abstract void RemoveAgent(Agent a);
+        //public abstract List<Agent> ListAg();
         //Loại Ô ( Ô đó được thể hiện thuộc loại tác tử nào)
         public int KindCell { get; set; }
 
-        ////Số lượng ô trong ô ( Ô đơn thì NumofCell=1)
-        //public int NumofCell { get; set; }
         //vi tri của ô
         public int X { get; set; }
         public int Y { get; set; }
 
-        public Cell() { }
+        public Cell() { listag = new List<Agent>(); }
+
         public Cell(int xPos, int yPos, int k)
         {
             X = xPos;
@@ -26,11 +46,17 @@ namespace SchellingModel
             KindCell = k;
         }
 
-        public abstract int NumAgofCell();
+        public  int NumAgofCell(int kG)
+        {
+            Random r = new Random();
+            if (kG == 1) return 1;
+            else 
+                return r.Next(10);
 
-        public virtual int KindOfCell() { return KindCell; }
-        public abstract void AddAgent(Agent a);
-        public abstract void RemoveAgent(Agent a);
-        public virtual List<Agent> ListAg() { return agent; }
+        }
+        public  int KindOfCell() { return KindCell; }
+        public  void AddAgent(Agent a) { listag.Add(a); }
+        public  void RemoveAgent(Agent a) { listag.Remove(a); }
+        public  List<Agent> ListAg() { return listag; }
     }
 }
