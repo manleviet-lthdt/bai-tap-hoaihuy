@@ -10,13 +10,14 @@ namespace SchellingModel
     {
         // Chứa các ô
         List<Cell> listc = new List<Cell>();
-        public Cell c=new Cell();
-
+        public Cell c = new Cell();
+        public Search search;
         // loại lưới
         public int kindG;
-
-        // Số ô trống
-        public int NumEmpty { get; set; }
+        //Chỉ số hạnh phúc
+        public double Sasti;
+        // Số ô trống ( % của tổng số ô)
+        public int Empty { get; set; }
 
         // Kích thước của ma trân NxN
         public int N { get; set; }
@@ -29,15 +30,17 @@ namespace SchellingModel
             //listc = new List<Cell>();
         }
 
-        public Grid(int e, int N, int x, int o, int k)
+        public Grid(int e, int N, int x, int o, int k, double s)
         {
             //listc = new List<Cell>();
-            NumEmpty = e;
+            Empty = e;
             this.N = N;
             Qx = x;
             Qo = o;
             kindG = k;
+            Sasti = s;
         }
+
         public int Total()
         {
             return N * N * c.NumAgofCell(kindG);
@@ -46,15 +49,20 @@ namespace SchellingModel
         public int NumAgentX()
         {
 
-            return (Total() - NumEmpty) * Qx / (Qx + Qo);
+            return (Total() - NumEmpty()) * Qx / (Qx + Qo);
         }
 
         public int NumAgentO()
         {
 
-            return Total() - NumAgentX() - NumEmpty;
+            return Total() - NumAgentX() - NumEmpty();
         }
 
+        public int NumEmpty()
+        {
+
+            return Total()*Empty/100;
+        }
         // các biến tạm để đếm tác tử
         int demAgX = 0;
         int demAgO = 0;
@@ -119,14 +127,14 @@ namespace SchellingModel
                 if (a.KindAgent == 0)
                     demAgO++;
                 //thay đổi biến để kiểm tra
-                tnull = (demAgNull == NumEmpty) ? true : false;
+                tnull = (demAgNull == NumEmpty()) ? true : false;
                 tx = (demAgX == NumAgentX()) ? true : false;
                 to = (demAgO == NumAgentO()) ? true : false;
 
                 c.AddAgent(a);
-               
+
             }
-            
+
             return c.ListAg();
         }
         // Lưu các tác tử
@@ -136,13 +144,13 @@ namespace SchellingModel
         {
             for (int i = 0; i < N; i++)
             {
-                for(int j=0;j<N; j++)
+                for (int j = 0; j < N; j++)
                 {
                     // Gán vị trí Y cho tác tử đồng thời chọn ngẫu nhiên loại tác tử 
                     listAg.AddRange(AddAgent());
                 }
             }
-            
+
             return listAg;
         }
         //Lưu loại tác tử trường hợp đa tác tử trong một ô
@@ -189,7 +197,7 @@ namespace SchellingModel
             //listc = new List<Cell>();
             foreach (Agent p in MakeListAgent())
             {
-                c= new Cell(i, j, p.KindOfAgent());
+                c = new Cell(i, j, p.KindOfAgent());
                 j++;
                 if (j == N)
                 {
@@ -201,6 +209,22 @@ namespace SchellingModel
 
             return listc;
         }
+        public List<Cell> ChangeSingle(int i, int j)
+        {
+            //search = new SOrdinal();
+            Cell tc = new Cell();
+            if (search.SearchSingle(i, j) == true)
+                return listc;
+            else
+            {
+                int t = rand.Next(0, listc.Count);
+                tc = listc[i];
+                listc[i] = listc[t];
+                listc[t] = tc;
+            }
+            return listc;
+        }
+
         public List<Cell> MakeListMulti()
         {
             int i = 0;
@@ -223,8 +247,10 @@ namespace SchellingModel
 
             return listc;
         }
-       
-            
-        
+
+
+
+
+
     }
 }

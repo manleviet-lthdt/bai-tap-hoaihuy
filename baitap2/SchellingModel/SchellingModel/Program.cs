@@ -31,12 +31,21 @@ namespace SchellingModel
             g.Qo = int.Parse(Console.ReadLine());
 
             //Số vị trí trống ( nhiều tác tử trong một ô)
-            Console.Write("Enter number of Empty: ");
-            g.NumEmpty = int.Parse(Console.ReadLine());
+            do
+            {
+                Console.Write("Enter the percent Empty of Total agent: ");
+                g.Empty = int.Parse(Console.ReadLine());
+            }
+            while (g.Sasti < 0 || g.Sasti > 100);
 
-            ////Nhập chỉ số hạnh phúc
-            //Console.Write("Enter index of satisfied: ");
-            // = int.Parse(Console.ReadLine());
+
+            //Nhập chỉ số hạnh phúc
+            do
+            {
+                Console.Write("Enter index of satisfied (0<Index<100): ");
+                g.Sasti = double.Parse(Console.ReadLine());
+            }
+            while (g.Sasti < 0 || g.Sasti > 100);
 
             //Kiểu ô
             do
@@ -49,34 +58,80 @@ namespace SchellingModel
             } while (g.kindG != 1 && g.kindG != 2);
 
 
-
+            Console.Clear();
             ////Xuất ra màn hình
             int[,] grid = new int[g.N, g.N];
+
+            if (g.kindG == 1)
+                Drawgird(grid, g, g.MakeListSingle());
+            else
+                Drawgird(grid, g, g.MakeListMulti());
+
+            Console.WriteLine("If you want to continute,press Enter ");
+            //Console.WriteLine(@"Press 'e' to exit");
+            Console.ReadKey();
+
+             Drawgird(grid, g, g.ChangeSingle(4,4));
+
+     
+            //int kindS = 1;
+            //do
+            //{
+            //    Console.WriteLine("Enter the key to search: ");
+            //    Console.WriteLine("  1.Ordinal: ");
+            //    Console.WriteLine("  2.Random: ");
+            //    kindS = int.Parse(Console.ReadLine());
+            //} while (kindS != 1 && kindS != 2);
+
+            //if (kindS==1)
+            //{
+            //    do
+            //    {
+            //        int j = 0;
+            //        for (int i = 0; i < g.MakeListSingle().Count; i++)
+            //        {
+            //            if (g.kindG == 1)
+            //                Drawgird(grid, g, g.ChangeSingle(i, j));
+
+            //            //else
+            //            //    Drawgird(grid, g, g.MakeListMulti());
+            //        }
+            //        Console.WriteLine("If you want to continute,press Enter ");
+            //        Console.WriteLine(@"Press 'e' to exit");
+            //        string t = Console.ReadLine();
+            //        if (t.Equals("e"))
+            //        {
+            //            Environment.Exit(0);
+            //        }
+            //        Console.ReadKey();
+            //        Console.Clear();
+            //    }
+            //    while (g.search.Check() == true);
+
+            //}
+
+
+
+        }
+
+        public static void Drawgird(int [,] grid, Grid g,List<Cell> list)
+        {
             int i = 0;
             int j = 0;
-            if(g.kindG==1)
+
+            foreach (Cell p in list)
             {
-                foreach (Cell p in g.MakeListSingle())
-                {
-                    grid[i, j] = p.KindOfCell();
-                    j++;
-                    if (j == N)
-                    { j = 0; i++; }
-                }
+                grid[i, j] = p.KindOfCell();
+                j++;
+                if (j == g.N)
+                { j = 0; i++; }
             }
-            if(g.kindG==2)
-            {
-                foreach (Cell p in g.MakeListMulti())
-                {
-                    grid[i, j] = p.KindOfCell();
-                    j++;
-                    if (j == N)
-                    { j = 0; i++; }
-                }
-            }
+
+
             GridUtility.DrawGrid(grid);
-            
         }
+
+
 
     }
 }
